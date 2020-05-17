@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+"""Tests related to the Injector subclasses."""
 from inspect import isclass
 
 import pytest
@@ -131,8 +132,11 @@ def test_redefine_dependency():
 
 
 def test_override_keyword_argument_if_dependency_was_specified():
-    """Use specified dependency for constructor keyword arguments if dependency
-    with desired name was mentioned in the injector."""
+    """Injector attributes takes precedence on default keyword arguments.
+
+    Use specified dependency for constructor keyword arguments if
+    dependency with desired name was mentioned in the injector.
+    """
 
     class Foo(object):
         def __init__(self, add, y=1):
@@ -151,8 +155,12 @@ def test_override_keyword_argument_if_dependency_was_specified():
 
 
 def test_preserve_keyword_argument_if_dependency_was_missed():
-    """Use constructor keyword arguments if dependency with desired name was
-    missed in the injector."""
+    """Default keyword arguments should be used if injector attribute is
+    missing.
+
+    Use constructor keyword arguments if dependency with desired name
+    was missed in the injector.
+    """
 
     class Foo(object):
         def __init__(self, add, y=1):
@@ -170,8 +178,11 @@ def test_preserve_keyword_argument_if_dependency_was_missed():
 
 
 def test_preserve_missed_keyword_argument_in_the_middle():
-    """Use default keyword argument and override following keyword argument
-    since it was specified in the constructor."""
+    """Missed injector attributes could be defined in any order.
+
+    Use default keyword argument and override following keyword argument
+    since it was specified in the constructor.
+    """
 
     class Foo(object):
         def __init__(self, x, y=1, z=2):
@@ -208,8 +219,11 @@ def test_class_named_argument_default_value():
 
 
 def test_injectable_without_its_own_init():
-    """Inject dependencies into object subclass which doesn't specify its own
-    `__init__`."""
+    """Instantiate classes without it's own constructor.
+
+    Inject dependencies into object subclass which doesn't specify its
+    own `__init__`.
+    """
 
     class Foo(object):
         def do(self):
@@ -469,7 +483,10 @@ def test_nested_injectors():
 
 
 def test_docstrings():
-    """Check we can access all API entry points documentation."""
+    """Check we can access Injector docstring.
+
+    It's handled by metaclass at runtime.
+    """
 
     assert (
         Injector.__doc__ == "\n"
@@ -478,11 +495,6 @@ def test_docstrings():
         "Classes inherited from this class may inject dependencies into classes\n"
         "specified in it namespace.\n"
     )
-    assert (
-        Injector.let.__doc__
-        == "Produce new Injector with some dependencies overwritten."
-    )
-    assert DependencyError.__doc__ == "Broken dependencies configuration error."
 
     class Foo(Injector):
         """New container."""

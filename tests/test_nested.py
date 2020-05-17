@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+"""Tests related to Injector classes written inside other Injector classes."""
 from dependencies import Injector
 from dependencies import Package
 from dependencies import this

@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+"""Tests related to the Package() proxy."""
 import inspect
 
 import pytest
@@ -23,8 +24,8 @@ def test_provide_module(code):
 
 @package_definitions.parametrize
 def test_provide_an_instance(code):
-    """Package instance attribute access should provide injectable spec when
-    refer to a class."""
+    """Package attribute access should provide an instance when refer to a
+    class."""
 
     Container = code()
 
@@ -66,8 +67,12 @@ def test_provide_a_variable(code):
 @pytest.mark.xfail
 @package_definitions.parametrize
 def test_provide_a_class(code):
-    """Package instance attribute should provide a class when it stored in the
-    attribute with `_class` in its name."""
+    """Package attribute access should provide a class in case of
+    `_class`-named attribute.
+
+    Package attribute should provide a class when it stored in the
+    attribute with `_class` in its name.
+    """
 
     Container = code()
 
@@ -123,8 +128,11 @@ injector_pointer = CodeCollector()
 @pytest.mark.xfail
 @injector_pointer.parametrize
 def test_point_to_injector(code):
-    """Package pointer should be able to point to `Injector` subclass attribute
-    defined in another module."""
+    """Package attribute access should provide Injector classes as is.
+
+    Package pointer should be able to point to `Injector` subclass
+    attribute defined in another module.
+    """
 
     Container = code()
 

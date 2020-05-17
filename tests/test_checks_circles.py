@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+"""Tests related to the circle detection in the injector definitions."""
 import pytest
 
 from dependencies import Injector
@@ -21,8 +22,9 @@ circle_defs = CodeCollector("foo")
 def test_circle_dependencies(code, foo):
     """Throw `DependencyError` if class needs a dependency named same as class.
 
-    `Summator.foo` will fail with maximum recursion depth.  So we need
-    to raise exception before this attribute access.
+    `Summator.foo` will fail with maximum recursion depth.
+
+    So we need to raise exception before this attribute access.
     """
 
     with pytest.raises(DependencyError) as exc_info:

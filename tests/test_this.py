@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+"""Tests related to the `this` proxy."""
 import pytest
 
 from dependencies import Injector
@@ -164,8 +165,11 @@ def dc4fedcd09d8():
 
 
 def test_item_getter_non_printable_key():
-    """We can describe item access for keys which can't be presented as normal
-    strings."""
+    """Don't use string representation as key hash function.
+
+    We can describe item access for keys which can't be presented as
+    normal strings.
+    """
 
     class Boom(object):
         def __init__(self, salt):
@@ -201,14 +205,6 @@ def test_attribute_access_after_item_getter():
         baz = this.bar.y["foo"].x
 
     assert Container.baz == 1
-
-
-def test_docstrings():
-    """Check we can access all API entry points documentation."""
-
-    assert this.__doc__ == (
-        "Declare attribute and item access during dependency injection."
-    )
 
 
 direct_proxy = CodeCollector()
